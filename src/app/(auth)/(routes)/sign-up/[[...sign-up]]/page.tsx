@@ -1,7 +1,7 @@
-import { SignUp } from "@clerk/nextjs";
+import { SignUp } from '@clerk/nextjs'
 
 const Page: React.FC = () => {
-    return <SignUp />;
+  return <SignUp />
 }
 
-export default Page;
+export default Page
