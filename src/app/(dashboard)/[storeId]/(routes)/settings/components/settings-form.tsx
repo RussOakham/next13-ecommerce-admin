@@ -9,6 +9,7 @@ import axios from 'axios'
 import { Trash } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 
+import AlertModal from '@/components/modals/alert-modal'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -55,8 +56,32 @@ const SettingsForm = ({ initialData }: SettingsFormProps) => {
     }
   }
 
+  const onDelete = async () => {
+    try {
+      setLoading(true)
+      await axios.delete(`/api/stores/${params.storeId}`)
+
+      router.refresh()
+      router.push('/')
+      toast.success('Store deleted successfully.')
+    } catch (error) {
+      toast.error(
+        `Make sure you've removed all related categories and products before deletion.`
+      )
+    } finally {
+      setLoading(false)
+      setOpen(false)
+    }
+  }
+
   return (
     <>
+      <AlertModal
+        isOpen={open}
+        onClose={() => setOpen(false)}
+        onConfirm={onDelete}
+        loading={loading}
+      />
       <div className="flex items-center justify-between">
         <Heading title="Settings" description="Manage your store settings" />
         <Button

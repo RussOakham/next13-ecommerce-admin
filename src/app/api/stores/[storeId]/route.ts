@@ -45,19 +45,15 @@ export async function PATCH(
   }
 }
 
-export async function DELETE(req: Request, params: { storeId: string }) {
+export async function DELETE(
+  req: Request,
+  { params }: { params: { storeId: string } }
+) {
   try {
     const { userId } = auth()
-    const body = await req.json()
-
-    const { name } = body as PatchStoreSettingsResponseSchema
 
     if (!userId) {
       return new NextResponse('Unauthorized', { status: 401 })
-    }
-
-    if (!name) {
-      return new NextResponse('Name is required', { status: 400 })
     }
 
     if (!params.storeId) {

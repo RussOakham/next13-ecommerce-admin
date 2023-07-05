@@ -9,6 +9,8 @@ const ModalProvider = () => {
 
   useEffect(() => {
     setIsMounted(true)
+
+    return () => setIsMounted(false)
   }, [])
 
   if (!isMounted) return null
