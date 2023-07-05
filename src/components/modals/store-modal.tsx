@@ -5,9 +5,13 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import axios, { AxiosResponse } from 'axios'
-import * as z from 'zod'
 
 import useStoreModal from '@/hooks/use-store-modal'
+import {
+  PostStoreFormValues,
+  postStoreRequestSchema,
+  PostStoreResponseSchema,
+} from '@/schemas/store'
 
 import { Button } from '../ui/button'
 import {
@@ -21,31 +25,22 @@ import {
 import { Input } from '../ui/input'
 import Modal from '../ui/modal'
 
-const storeFormSchema = z.object({
-  name: z.string().nonempty('Store name is required'),
-})
-
-interface StoresApiResponseSchema {
-  id: string
-  name: string
-}
-
 const StoreModal: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const storeModal = useStoreModal()
 
-  const form = useForm<z.infer<typeof storeFormSchema>>({
-    resolver: zodResolver(storeFormSchema),
+  const form = useForm<PostStoreFormValues>({
+    resolver: zodResolver(postStoreRequestSchema),
     defaultValues: {
       name: '',
     },
   })
 
-  const onSubmit = async (values: z.infer<typeof storeFormSchema>) => {
+  const onSubmit = async (values: PostStoreFormValues) => {
     try {
       setLoading(true)
 
-      const response: AxiosResponse<StoresApiResponseSchema> = await axios.post(
+      const response: AxiosResponse<PostStoreResponseSchema> = await axios.post(
         '/api/stores',
         values
       )

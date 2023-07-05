@@ -1,15 +1,17 @@
 import { auth } from '@clerk/nextjs'
 import { redirect } from 'next/navigation'
 
-import Navbar from '@/components/navbar'
 import { prismadb } from '@/lib/prismadb'
 
-interface DashboardLayoutProps {
-  children: React.ReactNode
-  params: { storeId: string }
+import SettingsForm from './components/settings-form'
+
+interface SettingsPageProps {
+  params: {
+    storeId: string
+  }
 }
 
-const layout = async ({ children, params }: DashboardLayoutProps) => {
+const SettingsPage = async ({ params }: SettingsPageProps) => {
   const { userId } = auth()
 
   if (!userId) {
@@ -28,11 +30,12 @@ const layout = async ({ children, params }: DashboardLayoutProps) => {
   }
 
   return (
-    <>
-      <Navbar />
-      <div className="px-4">{children}</div>
-    </>
+    <div className="flex-col">
+      <div className="flex-1 space-y-4 px-4 py-6">
+        <SettingsForm initialData={store} />
+      </div>
+    </div>
   )
 }
 
-export default layout
+export default SettingsPage

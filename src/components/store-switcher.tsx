@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { Store } from '@prisma/client'
 import { PopoverContent } from '@radix-ui/react-popover'
+import { sortBy } from 'lodash'
 import {
   Check,
   ChevronsUpDown,
@@ -33,6 +34,11 @@ interface StoreSwitcherProps extends PopoverTriggerProps {
   items: Store[]
 }
 
+interface FormattedStore {
+  label: string
+  id: string
+}
+
 const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => {
   const [open, setOpen] = useState(false)
 
@@ -40,14 +46,16 @@ const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => {
   const router = useRouter()
   const storeModal = useStoreModal()
 
-  const formattedItems = items.map((item) => ({
+  const formattedItems: FormattedStore[] = items.map((item) => ({
     label: item.name,
     id: item.id,
   }))
 
+  const sortedItems = sortBy(formattedItems, ['label'])
+
   const currentStore = formattedItems.find((item) => item.id === params.storeId)
 
-  const onStoreSelect = (store: { label: string; id: string }) => {
+  const onStoreSelect = (store: FormattedStore) => {
     setOpen(false)
     router.push(`/${store.id}`)
   }
@@ -75,7 +83,7 @@ const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => {
             <CommandInput placeholder="Search store..." />
             <CommandEmpty>No store found.</CommandEmpty>
             <CommandGroup heading="Stores">
-              {formattedItems.map((item) => (
+              {sortedItems.map((item) => (
                 <CommandItem
                   key={item.id}
                   className="text-sm"
