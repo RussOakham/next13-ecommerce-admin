@@ -10,6 +10,7 @@ import { Trash } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 
 import AlertModal from '@/components/modals/alert-modal'
+import ApiAlert from '@/components/ui/api-alert'
 import { Button } from '@/components/ui/button'
 import {
   Form,
@@ -22,6 +23,7 @@ import {
 import Heading from '@/components/ui/heading'
 import { Input } from '@/components/ui/input'
 import Separator from '@/components/ui/separator'
+import useOrigin from '@/hooks/use-origin'
 import {
   patchStoreSettingsRequestSchema,
   SettingsFormValues,
@@ -36,6 +38,7 @@ const SettingsForm = ({ initialData }: SettingsFormProps) => {
   const [loading, setLoading] = useState(false)
   const params = useParams()
   const router = useRouter()
+  const origin = useOrigin() ?? ''
 
   const form = useForm<SettingsFormValues>({
     resolver: zodResolver(patchStoreSettingsRequestSchema),
@@ -124,6 +127,12 @@ const SettingsForm = ({ initialData }: SettingsFormProps) => {
           </Button>
         </form>
       </Form>
+      <Separator />
+      <ApiAlert
+        variant="public"
+        title="NEXT_PUBLIC_API_URL"
+        description={`${origin}/api/${params.storeId}`}
+      />
     </>
   )
 }
