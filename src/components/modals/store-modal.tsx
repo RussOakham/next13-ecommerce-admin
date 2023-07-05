@@ -45,11 +45,14 @@ const StoreModal: React.FC = () => {
     try {
       setLoading(true)
 
-      const response: AxiosResponse<StoresApiResponseSchema> = await axios.post('/api/stores', values)
+      const response: AxiosResponse<StoresApiResponseSchema> = await axios.post(
+        '/api/stores',
+        values
+      )
 
       window.location.assign(`/${response.data.id}`)
     } catch (error) {
-      toast.error("Something went wrong, please try again.")
+      toast.error('Something went wrong, please try again.')
     } finally {
       setLoading(false)
     }
@@ -74,7 +77,11 @@ const StoreModal: React.FC = () => {
                   <FormItem>
                     <FormLabel>Name</FormLabel>
                     <FormControl>
-                      <Input placeholder="E-Commerce" disabled={loading} {...field} />
+                      <Input
+                        placeholder="E-Commerce"
+                        disabled={loading}
+                        {...field}
+                      />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -89,7 +96,9 @@ const StoreModal: React.FC = () => {
                 >
                   Cancel
                 </Button>
-                <Button type="submit" disabled={loading}>Continue</Button>
+                <Button type="submit" disabled={loading}>
+                  Continue
+                </Button>
               </div>
             </form>
           </Form>
