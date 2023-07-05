@@ -2,6 +2,7 @@ import { ClerkProvider } from '@clerk/nextjs'
 import { Inter } from 'next/font/google'
 
 import ModalProvider from '@/providers/modal-providers'
+import ToastProvider from '@/providers/toast-provider'
 
 import './globals.css'
 
@@ -20,7 +21,8 @@ const RootLayout = ({ children }: RootLayoutProps) => {
   return (
     <ClerkProvider>
       <html lang="en-GB">
-        <body className={inter.className}>
+        <body className={inter.className} suppressHydrationWarning>
+          <ToastProvider />
           <ModalProvider />
           {children}
         </body>
