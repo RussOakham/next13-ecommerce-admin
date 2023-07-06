@@ -1,6 +1,6 @@
 /* eslint-disable import/prefer-default-export */
-
 import { auth } from '@clerk/nextjs'
+import { AxiosError } from 'axios'
 import { NextResponse } from 'next/server'
 
 import { prismadb } from '@/lib/prismadb'
@@ -14,7 +14,7 @@ export async function POST(req: Request) {
     const { name } = body as PostStoreResponseSchema
 
     if (!userId) {
-      return new NextResponse('Unauthorized', { status: 401 })
+      return new NextResponse('Unauthenticated', { status: 401 })
     }
 
     if (!name) {
@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     return NextResponse.json(store)
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.log(`[STORES_POST] ${(error as Error).message}`)
+    console.log(`[STORES_POST] ${(error as AxiosError).message}`)
     return new NextResponse('Internal Error', { status: 500 })
   }
 }

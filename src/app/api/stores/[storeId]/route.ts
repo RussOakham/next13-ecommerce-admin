@@ -1,5 +1,5 @@
-/* eslint-disable import/prefer-default-export */
 import { auth } from '@clerk/nextjs'
+import { AxiosError } from 'axios'
 import { NextResponse } from 'next/server'
 
 import { prismadb } from '@/lib/prismadb'
@@ -16,7 +16,7 @@ export async function PATCH(
     const { name } = body as PatchStoreSettingsResponseSchema
 
     if (!userId) {
-      return new NextResponse('Unauthorized', { status: 401 })
+      return new NextResponse('Unauthenticated', { status: 401 })
     }
 
     if (!name) {
@@ -40,7 +40,7 @@ export async function PATCH(
     return NextResponse.json(store)
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.log(`[STORES_PATCH] ${(error as Error).message}`)
+    console.log(`[STORES_PATCH] ${(error as AxiosError).message}`)
     return new NextResponse('Internal Error', { status: 500 })
   }
 }
@@ -53,7 +53,7 @@ export async function DELETE(
     const { userId } = auth()
 
     if (!userId) {
-      return new NextResponse('Unauthorized', { status: 401 })
+      return new NextResponse('Unauthenticated', { status: 401 })
     }
 
     if (!params.storeId) {
@@ -70,7 +70,7 @@ export async function DELETE(
     return NextResponse.json(store)
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.log(`[STORES_DELETE] ${(error as Error).message}`)
+    console.log(`[STORES_DELETE] ${(error as AxiosError).message}`)
     return new NextResponse('Internal Error', { status: 500 })
   }
 }

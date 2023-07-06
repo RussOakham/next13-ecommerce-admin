@@ -6,7 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint && pnpm prettier",
     "prepare": "husky install",
     "prettier": "npx prettier src --check",
     "prettier-fix": "npx prettier src --write"

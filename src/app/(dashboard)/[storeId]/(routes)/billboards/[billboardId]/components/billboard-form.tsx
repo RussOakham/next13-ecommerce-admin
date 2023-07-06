@@ -25,7 +25,7 @@ import { Input } from '@/components/ui/input'
 import Separator from '@/components/ui/separator'
 import {
   BillboardFormValues,
-  patchBillboardRequestSchema,
+  billboardRequestSchema,
 } from '@/schemas/billboard'
 
 interface BillboardFormProps {
@@ -48,7 +48,7 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
   const action = initialData ? 'Save changes' : 'Create Billboard'
 
   const form = useForm<BillboardFormValues>({
-    resolver: zodResolver(patchBillboardRequestSchema),
+    resolver: zodResolver(billboardRequestSchema),
     defaultValues: initialData || {
       label: '',
       imageUrl: '',
@@ -69,6 +69,7 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
       }
 
       router.refresh()
+      router.push(`/${params.storeId}/billboards`)
       toast.success(toastMessage)
     } catch (error) {
       toast.error('Something went wrong, please try again.')
@@ -85,7 +86,7 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
       )
 
       router.refresh()
-      router.push('/')
+      router.push(`/${params.storeId}/billboards`)
       toast.success('Billboard deleted successfully.')
     } catch (error) {
       toast.error(
