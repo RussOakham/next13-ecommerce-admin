@@ -84,7 +84,6 @@ const StoreModal: React.FC = () => {
               />
               <div className="flex w-full items-center justify-end space-x-2 pt-6">
                 <Button
-                  type="button"
                   variant="outline"
                   disabled={loading}
                   onClick={storeModal.onClose}

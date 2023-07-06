@@ -36,20 +36,10 @@ const AlertModal = ({
       onClose={onClose}
     >
       <div className="flex w-full items-center justify-end space-x-2 pt-6">
-        <Button
-          type="button"
-          variant="outline"
-          onClick={onClose}
-          disabled={loading}
-        >
+        <Button variant="outline" onClick={onClose} disabled={loading}>
           Cancel
         </Button>
-        <Button
-          type="button"
-          variant="destructive"
-          onClick={onConfirm}
-          disabled={loading}
-        >
+        <Button variant="destructive" onClick={onConfirm} disabled={loading}>
           Delete
         </Button>
       </div>

@@ -88,7 +88,6 @@ const SettingsForm = ({ initialData }: SettingsFormProps) => {
       <div className="flex items-center justify-between">
         <Heading title="Settings" description="Manage your store settings" />
         <Button
-          type="button"
           variant="destructive"
           size="icon"
           onClick={() => setOpen(true)}

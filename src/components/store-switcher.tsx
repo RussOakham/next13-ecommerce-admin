@@ -64,7 +64,6 @@ const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => {
     <Popover open={open} onOpenChange={setOpen}>
       <PopoverTrigger asChild>
         <Button
-          type="button"
           variant="outline"
           size="sm"
           role="combobox"
