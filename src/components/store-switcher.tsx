@@ -3,7 +3,6 @@
 import { useState } from 'react'
 import { Store } from '@prisma/client'
 import { PopoverContent } from '@radix-ui/react-popover'
-import { sortBy } from 'lodash'
 import {
   Check,
   ChevronsUpDown,
@@ -51,8 +50,6 @@ const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => {
     id: item.id,
   }))
 
-  const sortedItems = sortBy(formattedItems, ['label'])
-
   const currentStore = formattedItems.find((item) => item.id === params.storeId)
 
   const onStoreSelect = (store: FormattedStore) => {
@@ -82,7 +79,7 @@ const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => {
             <CommandInput placeholder="Search store..." />
             <CommandEmpty>No store found.</CommandEmpty>
             <CommandGroup heading="Stores">
-              {sortedItems.map((item) => (
+              {formattedItems.map((item) => (
                 <CommandItem
                   key={item.id}
                   className="text-sm"

@@ -17,6 +17,9 @@ const Navbar = async () => {
     where: {
       userId,
     },
+    orderBy: {
+      name: 'asc',
+    },
   })
 
   return (
