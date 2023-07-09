@@ -32,3 +32,12 @@ export const patchCategoryResponseSchema = z.object({
 export type PatchCategoryResponseSchema = z.infer<
   typeof patchCategoryResponseSchema
 >
+
+// DELETE /api/[storeId]/categories/:categoryId
+export const deleteCategoryResponseSchema = z.object({
+  count: z.number(),
+})
+
+export type DeleteCategoryResponseSchema = z.infer<
+  typeof deleteCategoryResponseSchema
+>
