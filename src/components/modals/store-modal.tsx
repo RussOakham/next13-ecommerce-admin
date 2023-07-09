@@ -11,6 +11,7 @@ import {
   PostStoreFormValues,
   postStoreRequestSchema,
   PostStoreResponseSchema,
+  postStoreResponseSchema,
 } from '@/schemas/store'
 
 import { Button } from '../ui/button'
@@ -44,6 +45,7 @@ const StoreModal: React.FC = () => {
         '/api/stores',
         values
       )
+      postStoreResponseSchema.parse(response.data)
 
       window.location.assign(`/${response.data.id}`)
     } catch (error) {

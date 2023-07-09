@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Store } from '@prisma/client'
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
 import { Trash } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 
@@ -25,9 +25,11 @@ import { Input } from '@/components/ui/input'
 import Separator from '@/components/ui/separator'
 import useOrigin from '@/hooks/use-origin'
 import {
-  patchStoreSettingsRequestSchema,
-  SettingsFormValues,
-} from '@/schemas/storeSettings'
+  PatchStoreFormValues,
+  patchStoreRequestSchema,
+  PatchStoreResponseSchema,
+  patchStoreResponseSchema,
+} from '@/schemas/store'
 
 interface SettingsFormProps {
   initialData: Store
@@ -40,15 +42,17 @@ const SettingsForm = ({ initialData }: SettingsFormProps) => {
   const router = useRouter()
   const origin = useOrigin() ?? ''
 
-  const form = useForm<SettingsFormValues>({
-    resolver: zodResolver(patchStoreSettingsRequestSchema),
+  const form = useForm<PatchStoreFormValues>({
+    resolver: zodResolver(patchStoreRequestSchema),
     defaultValues: initialData,
   })
 
-  const onSubmit = async (formData: SettingsFormValues) => {
+  const onSubmit = async (formData: PatchStoreFormValues) => {
     try {
       setLoading(true)
-      await axios.patch(`/api/stores/${params.storeId}`, formData)
+      const response: AxiosResponse<PatchStoreResponseSchema> =
+        await axios.patch(`/api/stores/${params.storeId}`, formData)
+      patchStoreResponseSchema.parse(response.data)
 
       router.refresh()
       toast.success('Store settings updated successfully.')

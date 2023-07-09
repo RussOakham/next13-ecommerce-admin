@@ -3,7 +3,7 @@ import { AxiosError } from 'axios'
 import { NextResponse } from 'next/server'
 
 import { prismadb } from '@/lib/prismadb'
-import { PatchStoreSettingsResponseSchema } from '@/schemas/storeSettings'
+import { PatchStoreResponseSchema } from '@/schemas/store'
 
 export async function PATCH(
   req: Request,
@@ -13,7 +13,7 @@ export async function PATCH(
     const { userId } = auth()
     const body = await req.json()
 
-    const { name } = body as PatchStoreSettingsResponseSchema
+    const { name } = body as PatchStoreResponseSchema
 
     if (!userId) {
       return new NextResponse('Unauthenticated', { status: 401 })
