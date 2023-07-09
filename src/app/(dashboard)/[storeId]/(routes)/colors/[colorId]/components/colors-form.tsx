@@ -144,11 +144,17 @@ const ColorForm = ({ initialData }: ColorFormProps) => {
                 <FormItem>
                   <FormLabel>Value</FormLabel>
                   <FormControl>
-                    <Input
-                      disabled={loading}
-                      placeholder="Color value"
-                      {...field}
-                    />
+                    <div className="flex items-center gap-x-4">
+                      <div
+                        className="rounded-full border p-4"
+                        style={{ backgroundColor: field.value }}
+                      />
+                      <Input
+                        disabled={loading}
+                        placeholder="Color value"
+                        {...field}
+                      />
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>

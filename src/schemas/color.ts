@@ -4,7 +4,12 @@ import { z } from 'zod'
 // PATCH /api/[storeId]/colors/:colorsId
 export const upsertColorRequestSchema = z.object({
   name: z.string().nonempty('Color name is required'),
-  value: z.string().nonempty('Color value is required'),
+  value: z
+    .string()
+    .min(4, 'Color value must be 4 characters long')
+    .regex(/^#/, {
+      message: 'Color value be a valid hex color code',
+    }),
 })
 
 export type UpsertColorRequestSchema = z.infer<typeof upsertColorRequestSchema>
@@ -15,7 +20,12 @@ const postColorResponseSchema = z.object({
   id: z.string(),
   name: z.string(),
   storeId: z.string(),
-  value: z.string(),
+  value: z
+    .string()
+    .min(4, 'Color value must be 4 characters long')
+    .regex(/^#/, {
+      message: 'Color value be a valid hex color code',
+    }),
   updatedAt: z.string(),
 })
 
