@@ -37,9 +37,7 @@ const CellAction = ({ data }: CellActionProps) => {
       router.refresh()
       toast.success('Category deleted successfully.')
     } catch (error) {
-      toast.error(
-        "Make sure you've removed all categories using this category"
-      )
+      toast.error("Make sure you've removed all categories using this category")
     } finally {
       setLoading(false)
       setOpen(false)

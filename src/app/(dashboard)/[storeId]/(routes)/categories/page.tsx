@@ -5,7 +5,6 @@ import { prismadb } from '@/lib/prismadb'
 import CategoryClient from './components/category-client'
 import { CategoryColumn } from './components/category-types'
 
-
 interface CategoriesPageProps {
   params: {
     storeId: string
@@ -25,14 +24,12 @@ const CategoriesPage = async ({ params }: CategoriesPageProps) => {
     },
   })
 
-  const formattedCategories: CategoryColumn[] = categories.map(
-    (item) => ({
-      id: item.id,
-      name: item.name,
-      billboardLabel: item.billboard.label,
-      createdAt: format(item.createdAt, 'MMM do, yyyy'),
-    })
-  )
+  const formattedCategories: CategoryColumn[] = categories.map((item) => ({
+    id: item.id,
+    name: item.name,
+    billboardLabel: item.billboard.label,
+    createdAt: format(item.createdAt, 'MMM do, yyyy'),
+  }))
 
   return (
     <div className="flex-col">

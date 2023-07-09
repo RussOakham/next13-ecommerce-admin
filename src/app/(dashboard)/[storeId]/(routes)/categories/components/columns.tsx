@@ -25,7 +25,7 @@ const columns: ColumnDef<CategoryColumn>[] = [
   },
   {
     accessorKey: 'billboard',
-    header: "Billboard",
+    header: 'Billboard',
     cell: ({ row }) => row.original.billboardLabel,
   },
   {
