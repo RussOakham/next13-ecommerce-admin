@@ -1,18 +1,34 @@
 import { z } from 'zod'
 
-export const categoryRequestSchema = z.object({
+// POST /api/[storeId]/categories
+// PATCH /api/[storeId]/categories/:categoryId
+export const upsertCategoryRequestSchema = z.object({
   name: z.string().nonempty('Category name is required'),
   billboardId: z.string().nonempty('Billboard ID is required'),
 })
 
-export type CategoryFormValues = z.infer<typeof categoryRequestSchema>
+export type UpsertCategoryRequestSchema = z.infer<
+  typeof upsertCategoryRequestSchema
+>
 
-export interface PatchCategoryResponseSchema {
-  name: string
-  billboardId: string
-}
+export const postCategoryResponseSchema = z.object({
+  billboardId: z.string(),
+  createdAt: z.string(),
+  id: z.string(),
+  name: z.string(),
+  storeId: z.string(),
+  updatedAt: z.string(),
+})
 
-export interface PostCategoryResponseSchema {
-  name: string
-  billboardId: string
-}
+export type PostCategoryResponseSchema = z.infer<
+  typeof postCategoryResponseSchema
+>
+
+// PATCH /api/[storeId]/categories/:categoryId
+export const patchCategoryResponseSchema = z.object({
+  count: z.number(),
+})
+
+export type PatchCategoryResponseSchema = z.infer<
+  typeof patchCategoryResponseSchema
+>

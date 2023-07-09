@@ -29,7 +29,10 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import Separator from '@/components/ui/separator'
-import { CategoryFormValues, categoryRequestSchema } from '@/schemas/category'
+import {
+  UpsertCategoryRequestSchema,
+  upsertCategoryRequestSchema,
+} from '@/schemas/category'
 
 interface CategoryFormProps {
   initialData: Category | null
@@ -51,15 +54,15 @@ const CategoryForm = ({ initialData, billboards }: CategoryFormProps) => {
     : 'Category created successfully.'
   const action = initialData ? 'Save changes' : 'Create Category'
 
-  const form = useForm<CategoryFormValues>({
-    resolver: zodResolver(categoryRequestSchema),
+  const form = useForm<UpsertCategoryRequestSchema>({
+    resolver: zodResolver(upsertCategoryRequestSchema),
     defaultValues: initialData ?? {
       name: '',
       billboardId: '',
     },
   })
 
-  const onSubmit = async (formData: CategoryFormValues) => {
+  const onSubmit = async (formData: UpsertCategoryRequestSchema) => {
     try {
       setLoading(true)
 

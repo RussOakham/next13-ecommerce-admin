@@ -24,8 +24,8 @@ import ImageUpload from '@/components/ui/image-upload'
 import { Input } from '@/components/ui/input'
 import Separator from '@/components/ui/separator'
 import {
-  BillboardFormValues,
-  billboardRequestSchema,
+  UpsertBillboardFormValues,
+  upsertBillboardRequestSchema,
 } from '@/schemas/billboard'
 
 interface BillboardFormProps {
@@ -47,15 +47,15 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
     : 'Billboard created successfully.'
   const action = initialData ? 'Save changes' : 'Create Billboard'
 
-  const form = useForm<BillboardFormValues>({
-    resolver: zodResolver(billboardRequestSchema),
+  const form = useForm<UpsertBillboardFormValues>({
+    resolver: zodResolver(upsertBillboardRequestSchema),
     defaultValues: initialData ?? {
       label: '',
       imageUrl: '',
     },
   })
 
-  const onSubmit = async (formData: BillboardFormValues) => {
+  const onSubmit = async (formData: UpsertBillboardFormValues) => {
     try {
       setLoading(true)
 

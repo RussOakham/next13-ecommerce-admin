@@ -32,3 +32,12 @@ export const patchStoreResponseSchema = z.object({
   userId: z.string(),
 })
 export type PatchStoreResponseSchema = z.infer<typeof patchStoreResponseSchema>
+
+// DELETE /api/stores/:storeId
+export const deleteStoreResponseSchema = z.object({
+  count: z.number(),
+})
+
+export type DeleteStoreResponseSchema = z.infer<
+  typeof deleteStoreResponseSchema
+>
