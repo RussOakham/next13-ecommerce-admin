@@ -4,14 +4,14 @@ import { AxiosError } from 'axios'
 import { NextResponse } from 'next/server'
 
 import { prismadb } from '@/lib/prismadb'
-import { PostStoreResponseSchema } from '@/schemas/store'
+import { PostStoreRequestSchema } from '@/schemas/store'
 
 export async function POST(req: Request) {
   try {
     const { userId } = auth()
     const body = await req.json()
 
-    const { name } = body as PostStoreResponseSchema
+    const { name } = body as PostStoreRequestSchema
 
     if (!userId) {
       return new NextResponse('Unauthenticated', { status: 401 })

@@ -3,7 +3,7 @@ import { AxiosError } from 'axios'
 import { NextResponse } from 'next/server'
 
 import { prismadb } from '@/lib/prismadb'
-import { UpsertBillboardFormValues } from '@/schemas/billboard'
+import { UpsertBillboardRequestSchema } from '@/schemas/billboard'
 
 export async function GET(
   req: Request,
@@ -36,7 +36,7 @@ export async function PATCH(
     const { userId } = auth()
     const body = await req.json()
 
-    const { label, imageUrl } = body as UpsertBillboardFormValues
+    const { label, imageUrl } = body as UpsertBillboardRequestSchema
 
     if (!userId) {
       return new NextResponse('Unauthenticated', { status: 401 })

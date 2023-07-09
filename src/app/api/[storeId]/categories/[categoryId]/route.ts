@@ -3,7 +3,7 @@ import { AxiosError } from 'axios'
 import { NextResponse } from 'next/server'
 
 import { prismadb } from '@/lib/prismadb'
-import { PatchCategoryResponseSchema } from '@/schemas/category'
+import { UpsertCategoryRequestSchema } from '@/schemas/category'
 
 export async function GET(
   req: Request,
@@ -36,7 +36,7 @@ export async function PATCH(
     const { userId } = auth()
     const body = await req.json()
 
-    const { billboardId, name } = body as PatchCategoryResponseSchema
+    const { billboardId, name } = body as UpsertCategoryRequestSchema
 
     if (!userId) {
       return new NextResponse('Unauthenticated', { status: 401 })

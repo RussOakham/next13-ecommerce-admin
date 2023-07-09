@@ -7,7 +7,7 @@ export const upsertBillboardRequestSchema = z.object({
   imageUrl: z.string().nonempty('Billboard image url is required'),
 })
 
-export type UpsertBillboardFormValues = z.infer<
+export type UpsertBillboardRequestSchema = z.infer<
   typeof upsertBillboardRequestSchema
 >
 

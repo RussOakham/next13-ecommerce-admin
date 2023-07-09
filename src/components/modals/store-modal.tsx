@@ -8,7 +8,7 @@ import axios, { AxiosResponse } from 'axios'
 
 import useStoreModal from '@/hooks/use-store-modal'
 import {
-  PostStoreFormValues,
+  PostStoreRequestSchema,
   postStoreRequestSchema,
   PostStoreResponseSchema,
   postStoreResponseSchema,
@@ -30,14 +30,14 @@ const StoreModal: React.FC = () => {
   const [loading, setLoading] = useState(false)
   const storeModal = useStoreModal()
 
-  const form = useForm<PostStoreFormValues>({
+  const form = useForm<PostStoreRequestSchema>({
     resolver: zodResolver(postStoreRequestSchema),
     defaultValues: {
       name: '',
     },
   })
 
-  const onSubmit = async (values: PostStoreFormValues) => {
+  const onSubmit = async (values: PostStoreRequestSchema) => {
     try {
       setLoading(true)
 

@@ -5,7 +5,7 @@ export const postStoreRequestSchema = z.object({
   name: z.string().nonempty('Store name is required'),
 })
 
-export type PostStoreFormValues = z.infer<typeof postStoreRequestSchema>
+export type PostStoreRequestSchema = z.infer<typeof postStoreRequestSchema>
 
 export const postStoreResponseSchema = z.object({
   createdAt: z.string(),
@@ -22,14 +22,10 @@ export const patchStoreRequestSchema = z.object({
   name: z.string().nonempty('Store name is required'),
 })
 
-export type PatchStoreFormValues = z.infer<typeof patchStoreRequestSchema>
+export type PatchStoreRequestSchema = z.infer<typeof patchStoreRequestSchema>
 
 export const patchStoreResponseSchema = z.object({
-  createdAt: z.string(),
-  id: z.string(),
-  name: z.string(),
-  updatedAt: z.string(),
-  userId: z.string(),
+  count: z.number(),
 })
 export type PatchStoreResponseSchema = z.infer<typeof patchStoreResponseSchema>
 

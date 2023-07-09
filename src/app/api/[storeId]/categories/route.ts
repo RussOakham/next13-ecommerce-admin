@@ -3,7 +3,7 @@ import { AxiosError } from 'axios'
 import { NextResponse } from 'next/server'
 
 import { prismadb } from '@/lib/prismadb'
-import { PostCategoryResponseSchema } from '@/schemas/category'
+import { UpsertCategoryRequestSchema } from '@/schemas/category'
 
 export async function POST(
   req: Request,
@@ -13,7 +13,7 @@ export async function POST(
     const { userId } = auth()
     const body = await req.json()
 
-    const { billboardId, name } = body as PostCategoryResponseSchema
+    const { billboardId, name } = body as UpsertCategoryRequestSchema
 
     if (!userId) {
       return new NextResponse('Unauthenticated', { status: 401 })

@@ -24,7 +24,10 @@ import Heading from '@/components/ui/heading'
 import { Input } from '@/components/ui/input'
 import Separator from '@/components/ui/separator'
 import useOrigin from '@/hooks/use-origin'
-import { PatchStoreFormValues, patchStoreRequestSchema } from '@/schemas/store'
+import {
+  PatchStoreRequestSchema,
+  patchStoreRequestSchema,
+} from '@/schemas/store'
 
 interface SettingsFormProps {
   initialData: Store
@@ -37,15 +40,20 @@ const SettingsForm = ({ initialData }: SettingsFormProps) => {
   const router = useRouter()
   const origin = useOrigin() ?? ''
 
-  const form = useForm<PatchStoreFormValues>({
+  const form = useForm<PatchStoreRequestSchema>({
     resolver: zodResolver(patchStoreRequestSchema),
     defaultValues: initialData,
   })
 
-  const onSubmit = async (formData: PatchStoreFormValues) => {
+  const onSubmit = async (formData: PatchStoreRequestSchema) => {
     try {
       setLoading(true)
-      await axios.patch(`/api/stores/${params.storeId}`, formData)
+      const response = await axios.patch(
+        `/api/stores/${params.storeId}`,
+        formData
+      )
+
+      console.log(response)
 
       router.refresh()
       toast.success('Store settings updated successfully.')

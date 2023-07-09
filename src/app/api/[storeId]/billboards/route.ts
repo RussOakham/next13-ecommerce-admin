@@ -3,7 +3,7 @@ import { AxiosError } from 'axios'
 import { NextResponse } from 'next/server'
 
 import { prismadb } from '@/lib/prismadb'
-import { PostBillboardResponseSchema } from '@/schemas/billboard'
+import { UpsertBillboardRequestSchema } from '@/schemas/billboard'
 
 export async function POST(
   req: Request,
@@ -13,7 +13,7 @@ export async function POST(
     const { userId } = auth()
     const body = await req.json()
 
-    const { imageUrl, label } = body as PostBillboardResponseSchema
+    const { imageUrl, label } = body as UpsertBillboardRequestSchema
 
     if (!userId) {
       return new NextResponse('Unauthenticated', { status: 401 })
