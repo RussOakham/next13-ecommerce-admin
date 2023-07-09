@@ -10,13 +10,13 @@ import Heading from '@/components/ui/heading'
 import Separator from '@/components/ui/separator'
 
 import columns from './columns'
-import { SizeColumn } from './sizes-types'
+import { ProductColumn } from './products-types'
 
-interface SizesClientProps {
-  data: SizeColumn[]
+interface ProductClientProps {
+  data: ProductColumn[]
 }
 
-const SizesClient = ({ data }: SizesClientProps) => {
+const ProductClient = ({ data }: ProductClientProps) => {
   const router = useRouter()
   const params = useParams()
 
@@ -24,21 +24,21 @@ const SizesClient = ({ data }: SizesClientProps) => {
     <>
       <div className="flex items-center justify-between">
         <Heading
-          title={`Sizes (${data.length})`}
-          description="Manage your store sizes"
+          title={`Products (${data.length})`}
+          description="Manage your store products"
         />
-        <Button onClick={() => router.push(`/${params.storeId}/sizes/new`)}>
+        <Button onClick={() => router.push(`/${params.storeId}/products/new`)}>
           <Plus className="mr-2 h-4 w-4" />
           Add New
         </Button>
       </div>
       <Separator />
       <DataTable columns={columns} data={data} searchKey="name" />
-      <Heading title="API" description="API Calls for Sizes" />
+      <Heading title="API" description="API Calls for Products" />
       <Separator />
-      <ApiList entityIdName="sizeId" entityName="sizes" />
+      <ApiList entityIdName="productId" entityName="products" />
     </>
   )
 }
 
-export default SizesClient
+export default ProductClient
