@@ -7,7 +7,7 @@ import { UpsertBillboardRequestSchema } from '@/schemas/billboard'
 
 export async function GET(
   req: Request,
-  { params }: { params: { billboardId: string } }
+  { params }: { params: { billboardId: string } },
 ) {
   try {
     if (!params.billboardId) {
@@ -30,7 +30,7 @@ export async function GET(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string; billboardId: string } }
+  { params }: { params: { storeId: string; billboardId: string } },
 ) {
   try {
     const { userId } = auth()
@@ -89,7 +89,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { storeId: string; billboardId: string } }
+  { params }: { params: { storeId: string; billboardId: string } },
 ) {
   try {
     const { userId } = auth()

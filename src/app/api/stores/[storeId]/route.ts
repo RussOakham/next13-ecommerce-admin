@@ -7,7 +7,7 @@ import { PatchStoreRequestSchema } from '@/schemas/store'
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string } }
+  { params }: { params: { storeId: string } },
 ) {
   try {
     const { userId } = auth()
@@ -47,7 +47,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { storeId: string } }
+  { params }: { params: { storeId: string } },
 ) {
   try {
     const { userId } = auth()

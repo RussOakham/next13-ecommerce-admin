@@ -64,7 +64,7 @@ const MainNav = ({ className }: MainNavProps) => {
             'text-sm font-medium transition-colors hover:text-primary',
             route.active
               ? 'text-black dark:text-white'
-              : 'text-muted-foreground'
+              : 'text-muted-foreground',
           )}
           key={route.href}
           href={route.href}

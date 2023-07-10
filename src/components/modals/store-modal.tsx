@@ -43,7 +43,7 @@ const StoreModal: React.FC = () => {
 
       const response: AxiosResponse<PostStoreResponseSchema> = await axios.post(
         '/api/stores',
-        values
+        values,
       )
       postStoreResponseSchema.parse(response.data)
 

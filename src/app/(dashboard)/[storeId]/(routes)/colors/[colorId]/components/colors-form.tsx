@@ -60,7 +60,7 @@ const ColorForm = ({ initialData }: ColorFormProps) => {
       if (initialData) {
         await axios.patch(
           `/api/${params.storeId}/colors/${params.colorId}`,
-          formData
+          formData,
         )
       } else {
         await axios.post(`/api/${params.storeId}/colors`, formData)

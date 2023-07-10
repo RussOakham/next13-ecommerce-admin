@@ -1,9 +1,8 @@
 'use client'
 
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
-import { DevTool } from '@hookform/devtools'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Category, Color, Image, Product, Size } from '@prisma/client'
 import axios from 'axios'
@@ -43,10 +42,10 @@ interface ProductFormProps {
   colors: Color[]
   sizes: Size[]
   initialData:
-  | (Product & {
-    images: Image[]
-  })
-  | null
+    | (Product & {
+        images: Image[]
+      })
+    | null
 }
 
 const ProductForm = ({
@@ -73,19 +72,19 @@ const ProductForm = ({
     resolver: zodResolver(upsertProductRequestSchema),
     defaultValues: initialData
       ? {
-        ...initialData,
-        price: parseFloat(String(initialData?.price)),
-      }
+          ...initialData,
+          price: parseFloat(String(initialData?.price)),
+        }
       : {
-        name: '',
-        images: [],
-        price: 0.0,
-        categoryId: '',
-        colorId: '',
-        sizeId: '',
-        isFeatured: false,
-        isArchived: false,
-      },
+          name: '',
+          images: [],
+          price: 0.0,
+          categoryId: '',
+          colorId: '',
+          sizeId: '',
+          isFeatured: false,
+          isArchived: false,
+        },
   })
 
   const onSubmit = async (formData: UpsertProductRequestSchema) => {
@@ -94,7 +93,7 @@ const ProductForm = ({
       if (initialData) {
         await axios.patch(
           `/api/${params.storeId}/products/${params.productId}`,
-          formData
+          formData,
         )
       } else {
         await axios.post(`/api/${params.storeId}/products`, formData)
@@ -125,6 +124,14 @@ const ProductForm = ({
       setOpen(false)
     }
   }
+
+  useEffect(() => {
+    const currency = form.getValues('price').toString()
+
+    if (currency) {
+      form.setValue('price', +parseFloat(currency).toFixed(2))
+    }
+  }, [form])
 
   return (
     <>
@@ -359,7 +366,6 @@ const ProductForm = ({
             {action}
           </Button>
         </form>
-        <DevTool control={form.control} />
       </Form>
       <Separator />
     </>

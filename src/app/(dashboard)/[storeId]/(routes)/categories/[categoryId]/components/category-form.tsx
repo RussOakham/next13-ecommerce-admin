@@ -69,7 +69,7 @@ const CategoryForm = ({ initialData, billboards }: CategoryFormProps) => {
       if (initialData) {
         await axios.patch(
           `/api/${params.storeId}/categories/${params.categoryId}`,
-          formData
+          formData,
         )
       } else {
         await axios.post(`/api/${params.storeId}/categories`, formData)
@@ -89,7 +89,7 @@ const CategoryForm = ({ initialData, billboards }: CategoryFormProps) => {
     try {
       setLoading(true)
       await axios.delete(
-        `/api/${params.storeId}/categories/${params.categoryId}`
+        `/api/${params.storeId}/categories/${params.categoryId}`,
       )
 
       router.refresh()
@@ -97,7 +97,7 @@ const CategoryForm = ({ initialData, billboards }: CategoryFormProps) => {
       toast.success('Category deleted successfully.')
     } catch (error) {
       toast.error(
-        "Make sure you've removed all products using this category first"
+        "Make sure you've removed all products using this category first",
       )
     } finally {
       setLoading(false)

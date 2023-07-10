@@ -38,7 +38,7 @@ const CellAction = ({ data }: CellActionProps) => {
       toast.success('Billboard deleted successfully.')
     } catch (error) {
       toast.error(
-        "Make sure you've removed all categories using this billboard"
+        "Make sure you've removed all categories using this billboard",
       )
     } finally {
       setLoading(false)

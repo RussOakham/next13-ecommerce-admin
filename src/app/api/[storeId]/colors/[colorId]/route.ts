@@ -7,7 +7,7 @@ import { UpsertColorRequestSchema } from '@/schemas/color'
 
 export async function GET(
   req: Request,
-  { params }: { params: { colorId: string } }
+  { params }: { params: { colorId: string } },
 ) {
   try {
     if (!params.colorId) {
@@ -30,7 +30,7 @@ export async function GET(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string; colorId: string } }
+  { params }: { params: { storeId: string; colorId: string } },
 ) {
   try {
     const { userId } = auth()
@@ -89,7 +89,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { storeId: string; colorId: string } }
+  { params }: { params: { storeId: string; colorId: string } },
 ) {
   try {
     const { userId } = auth()

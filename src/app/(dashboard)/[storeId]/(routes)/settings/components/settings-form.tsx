@@ -69,7 +69,7 @@ const SettingsForm = ({ initialData }: SettingsFormProps) => {
       toast.success('Store deleted successfully.')
     } catch (error) {
       toast.error(
-        `Make sure you've removed all related categories and products before deletion.`
+        `Make sure you've removed all related categories and products before deletion.`,
       )
     } finally {
       setLoading(false)

@@ -7,7 +7,7 @@ import { UpsertSizeRequestSchema } from '@/schemas/size'
 
 export async function GET(
   req: Request,
-  { params }: { params: { sizeId: string } }
+  { params }: { params: { sizeId: string } },
 ) {
   try {
     if (!params.sizeId) {
@@ -30,7 +30,7 @@ export async function GET(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { storeId: string; sizeId: string } }
+  { params }: { params: { storeId: string; sizeId: string } },
 ) {
   try {
     const { userId } = auth()
@@ -89,7 +89,7 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { storeId: string; sizeId: string } }
+  { params }: { params: { storeId: string; sizeId: string } },
 ) {
   try {
     const { userId } = auth()

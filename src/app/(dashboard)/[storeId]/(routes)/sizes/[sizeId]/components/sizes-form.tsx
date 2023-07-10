@@ -58,7 +58,7 @@ const SizeForm = ({ initialData }: SizeFormProps) => {
       if (initialData) {
         await axios.patch(
           `/api/${params.storeId}/sizes/${params.sizeId}`,
-          formData
+          formData,
         )
       } else {
         await axios.post(`/api/${params.storeId}/sizes`, formData)

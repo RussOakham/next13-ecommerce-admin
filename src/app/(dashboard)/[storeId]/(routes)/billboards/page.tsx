@@ -26,7 +26,7 @@ const BillboardsPage = async ({ params }: BillboardsPageProps) => {
       id: billboard.id,
       label: billboard.label,
       createdAt: format(billboard.createdAt, 'MMM do, yyyy'),
-    })
+    }),
   )
 
   return (

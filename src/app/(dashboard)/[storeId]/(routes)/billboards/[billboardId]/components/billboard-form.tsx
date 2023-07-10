@@ -62,7 +62,7 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
       if (initialData) {
         await axios.patch(
           `/api/${params.storeId}/billboards/${params.billboardId}`,
-          formData
+          formData,
         )
       } else {
         await axios.post(`/api/${params.storeId}/billboards`, formData)
@@ -82,7 +82,7 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
     try {
       setLoading(true)
       await axios.delete(
-        `/api/${params.storeId}/billboards/${params.billboardId}`
+        `/api/${params.storeId}/billboards/${params.billboardId}`,
       )
 
       router.refresh()
@@ -90,7 +90,7 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
       toast.success('Billboard deleted successfully.')
     } catch (error) {
       toast.error(
-        "Make sure you've removed all categories using this billboard"
+        "Make sure you've removed all categories using this billboard",
       )
     } finally {
       setLoading(false)

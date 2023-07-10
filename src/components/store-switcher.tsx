@@ -90,7 +90,9 @@ const StoreSwitcher = ({ className, items = [] }: StoreSwitcherProps) => {
                   <Check
                     className={cn(
                       'ml-auto h-4 w-4',
-                      currentStore?.id === item.id ? 'opacity-100' : 'opacity-0'
+                      currentStore?.id === item.id
+                        ? 'opacity-100'
+                        : 'opacity-0',
                     )}
                   />
                 </CommandItem>
