@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Size } from '@prisma/client'
-import axios from 'axios'
 import { Trash } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 
@@ -22,6 +21,7 @@ import {
 import Heading from '@/components/ui/heading'
 import { Input } from '@/components/ui/input'
 import Separator from '@/components/ui/separator'
+import axios from '@/lib/axios'
 import {
   UpsertSizeRequestSchema,
   upsertSizeRequestSchema,
@@ -36,6 +36,9 @@ const SizeForm = ({ initialData }: SizeFormProps) => {
   const [loading, setLoading] = useState(false)
   const params = useParams()
   const router = useRouter()
+
+  const storeId = params.storeId as string
+  const sizeId = params.sizeId as string
 
   const title = initialData ? 'Edit Size' : 'New Size'
   const description = initialData ? 'Edit your store Size' : 'Create a new Size'
@@ -56,16 +59,13 @@ const SizeForm = ({ initialData }: SizeFormProps) => {
       setLoading(true)
 
       if (initialData) {
-        await axios.patch(
-          `/api/${params.storeId}/sizes/${params.sizeId}`,
-          formData,
-        )
+        await axios.patch(`/api/${storeId}/sizes/${sizeId}`, formData)
       } else {
-        await axios.post(`/api/${params.storeId}/sizes`, formData)
+        await axios.post(`/api/${storeId}/sizes`, formData)
       }
 
       router.refresh()
-      router.push(`/${params.storeId}/sizes`)
+      router.push(`/${storeId}/sizes`)
       toast.success(toastMessage)
     } catch (error) {
       toast.error('Something went wrong, please try again.')
@@ -77,10 +77,10 @@ const SizeForm = ({ initialData }: SizeFormProps) => {
   const onDelete = async () => {
     try {
       setLoading(true)
-      await axios.delete(`/api/${params.storeId}/sizes/${params.sizeId}`)
+      await axios.delete(`/api/${storeId}/sizes/${sizeId}`)
 
       router.refresh()
-      router.push(`/${params.storeId}/sizes`)
+      router.push(`/${storeId}/sizes`)
       toast.success('Size deleted successfully.')
     } catch (error) {
       toast.error("Make sure you've removed all categories using this size")

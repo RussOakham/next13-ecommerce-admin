@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Color } from '@prisma/client'
-import axios from 'axios'
 import { Trash } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 
@@ -22,6 +21,7 @@ import {
 import Heading from '@/components/ui/heading'
 import { Input } from '@/components/ui/input'
 import Separator from '@/components/ui/separator'
+import axios from '@/lib/axios'
 import {
   UpsertColorRequestSchema,
   upsertColorRequestSchema,
@@ -36,6 +36,9 @@ const ColorForm = ({ initialData }: ColorFormProps) => {
   const [loading, setLoading] = useState(false)
   const params = useParams()
   const router = useRouter()
+
+  const storeId = params.storeId as string
+  const colorId = params.colorId as string
 
   const title = initialData ? 'Edit Color' : 'New Color'
   const description = initialData
@@ -58,16 +61,13 @@ const ColorForm = ({ initialData }: ColorFormProps) => {
       setLoading(true)
 
       if (initialData) {
-        await axios.patch(
-          `/api/${params.storeId}/colors/${params.colorId}`,
-          formData,
-        )
+        await axios.patch(`/api/${storeId}/colors/${colorId}`, formData)
       } else {
-        await axios.post(`/api/${params.storeId}/colors`, formData)
+        await axios.post(`/api/${storeId}/colors`, formData)
       }
 
       router.refresh()
-      router.push(`/${params.storeId}/colors`)
+      router.push(`/${storeId}/colors`)
       toast.success(toastMessage)
     } catch (error) {
       toast.error('Something went wrong, please try again.')
@@ -79,10 +79,10 @@ const ColorForm = ({ initialData }: ColorFormProps) => {
   const onDelete = async () => {
     try {
       setLoading(true)
-      await axios.delete(`/api/${params.storeId}/colors/${params.colorId}`)
+      await axios.delete(`/api/${storeId}/colors/${colorId}`)
 
       router.refresh()
-      router.push(`/${params.storeId}/colors`)
+      router.push(`/${storeId}/colors`)
       toast.success('Color deleted successfully.')
     } catch (error) {
       toast.error("Make sure you've removed all categories using this color")

@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Store } from '@prisma/client'
-import axios from 'axios'
 import { Trash } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 
@@ -24,6 +23,7 @@ import Heading from '@/components/ui/heading'
 import { Input } from '@/components/ui/input'
 import Separator from '@/components/ui/separator'
 import useOrigin from '@/hooks/use-origin'
+import axios from '@/lib/axios'
 import {
   PatchStoreRequestSchema,
   patchStoreRequestSchema,
@@ -40,6 +40,8 @@ const SettingsForm = ({ initialData }: SettingsFormProps) => {
   const router = useRouter()
   const origin = useOrigin() ?? ''
 
+  const storeId = params.storeId as string
+
   const form = useForm<PatchStoreRequestSchema>({
     resolver: zodResolver(patchStoreRequestSchema),
     defaultValues: initialData,
@@ -48,7 +50,7 @@ const SettingsForm = ({ initialData }: SettingsFormProps) => {
   const onSubmit = async (formData: PatchStoreRequestSchema) => {
     try {
       setLoading(true)
-      await axios.patch(`/api/stores/${params.storeId}`, formData)
+      await axios.patch(`/api/stores/${storeId}`, formData)
 
       router.refresh()
       toast.success('Store settings updated successfully.')
@@ -62,7 +64,7 @@ const SettingsForm = ({ initialData }: SettingsFormProps) => {
   const onDelete = async () => {
     try {
       setLoading(true)
-      await axios.delete(`/api/stores/${params.storeId}`)
+      await axios.delete(`/api/stores/${storeId}`)
 
       router.refresh()
       router.push('/')
@@ -130,7 +132,7 @@ const SettingsForm = ({ initialData }: SettingsFormProps) => {
       <ApiAlert
         variant="public"
         title="NEXT_PUBLIC_API_URL"
-        description={`${origin}/api/${params.storeId}`}
+        description={`${origin}/api/${storeId}`}
       />
     </>
   )

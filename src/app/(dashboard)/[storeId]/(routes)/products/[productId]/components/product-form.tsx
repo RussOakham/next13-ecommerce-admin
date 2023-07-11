@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Category, Color, Image, Product, Size } from '@prisma/client'
-import axios from 'axios'
 import { Trash } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 
@@ -32,6 +31,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import Separator from '@/components/ui/separator'
+import axios from '@/lib/axios'
 import {
   UpsertProductRequestSchema,
   upsertProductRequestSchema,
@@ -58,6 +58,9 @@ const ProductForm = ({
   const [loading, setLoading] = useState(false)
   const params = useParams()
   const router = useRouter()
+
+  const storeId = params.storeId as string
+  const productId = params.productId as string
 
   const title = initialData ? 'Edit Product' : 'New Product'
   const description = initialData
@@ -91,16 +94,13 @@ const ProductForm = ({
     try {
       setLoading(true)
       if (initialData) {
-        await axios.patch(
-          `/api/${params.storeId}/products/${params.productId}`,
-          formData,
-        )
+        await axios.patch(`/api/${storeId}/products/${productId}`, formData)
       } else {
-        await axios.post(`/api/${params.storeId}/products`, formData)
+        await axios.post(`/api/${storeId}/products`, formData)
       }
 
       router.refresh()
-      router.push(`/${params.storeId}/products`)
+      router.push(`/${storeId}/products`)
       toast.success(toastMessage)
     } catch (error) {
       toast.error('Something went wrong, please try again.')
@@ -112,10 +112,10 @@ const ProductForm = ({
   const onDelete = async () => {
     try {
       setLoading(true)
-      await axios.delete(`/api/${params.storeId}/products/${params.productId}`)
+      await axios.delete(`/api/${storeId}/products/${productId}`)
 
       router.refresh()
-      router.push(`/${params.storeId}/products`)
+      router.push(`/${storeId}/products`)
       toast.success('Product deleted successfully.')
     } catch (error) {
       toast.error("Make sure you've removed all categories using this product")

@@ -4,9 +4,10 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { zodResolver } from '@hookform/resolvers/zod'
-import axios, { AxiosResponse } from 'axios'
+import type { AxiosResponse } from 'axios'
 
 import useStoreModal from '@/hooks/use-store-modal'
+import axios from '@/lib/axios'
 import {
   PostStoreRequestSchema,
   postStoreRequestSchema,

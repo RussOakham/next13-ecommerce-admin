@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Billboard } from '@prisma/client'
-import axios from 'axios'
 import { Trash } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 
@@ -23,6 +22,7 @@ import Heading from '@/components/ui/heading'
 import ImageUpload from '@/components/ui/image-upload'
 import { Input } from '@/components/ui/input'
 import Separator from '@/components/ui/separator'
+import axios from '@/lib/axios'
 import {
   UpsertBillboardRequestSchema,
   upsertBillboardRequestSchema,
@@ -37,6 +37,9 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
   const [loading, setLoading] = useState(false)
   const params = useParams()
   const router = useRouter()
+
+  const storeId = params.storeId as string
+  const billboardId = params.billboardId as string
 
   const title = initialData ? 'Edit Billboard' : 'New Billboard'
   const description = initialData
@@ -60,16 +63,13 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
       setLoading(true)
 
       if (initialData) {
-        await axios.patch(
-          `/api/${params.storeId}/billboards/${params.billboardId}`,
-          formData,
-        )
+        await axios.patch(`/api/${storeId}/billboards/${billboardId}`, formData)
       } else {
-        await axios.post(`/api/${params.storeId}/billboards`, formData)
+        await axios.post(`/api/${storeId}/billboards`, formData)
       }
 
       router.refresh()
-      router.push(`/${params.storeId}/billboards`)
+      router.push(`/${storeId}/billboards`)
       toast.success(toastMessage)
     } catch (error) {
       toast.error('Something went wrong, please try again.')
@@ -81,12 +81,10 @@ const BillboardForm = ({ initialData }: BillboardFormProps) => {
   const onDelete = async () => {
     try {
       setLoading(true)
-      await axios.delete(
-        `/api/${params.storeId}/billboards/${params.billboardId}`,
-      )
+      await axios.delete(`/api/${storeId}/billboards/${billboardId}`)
 
       router.refresh()
-      router.push(`/${params.storeId}/billboards`)
+      router.push(`/${storeId}/billboards`)
       toast.success('Billboard deleted successfully.')
     } catch (error) {
       toast.error(

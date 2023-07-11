@@ -2,7 +2,6 @@
 
 import { useState } from 'react'
 import { toast } from 'react-hot-toast'
-import axios from 'axios'
 import { Copy, Edit, MoreHorizontal, Trash } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 
@@ -15,6 +14,7 @@ import {
   DropdownMenuLabel,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import axios from '@/lib/axios'
 
 import { CellActionProps } from './category-types'
 
@@ -24,6 +24,8 @@ const CellAction = ({ data }: CellActionProps) => {
   const router = useRouter()
   const params = useParams()
 
+  const storeId = params.storeId as string
+
   const onCopy = async (id: string) => {
     await navigator.clipboard.writeText(id)
     toast.success('Copied to clipboard')
@@ -32,7 +34,7 @@ const CellAction = ({ data }: CellActionProps) => {
   const onDelete = async () => {
     try {
       setLoading(true)
-      await axios.delete(`/api/${params.storeId}/categories/${data.id}`)
+      await axios.delete(`/api/${storeId}/categories/${data.id}`)
 
       router.refresh()
       toast.success('Category deleted successfully.')
@@ -62,9 +64,7 @@ const CellAction = ({ data }: CellActionProps) => {
         <DropdownMenuContent align="end">
           <DropdownMenuLabel>Actions</DropdownMenuLabel>
           <DropdownMenuItem
-            onClick={() =>
-              router.push(`/${params.storeId}/categories/${data.id}`)
-            }
+            onClick={() => router.push(`/${storeId}/categories/${data.id}`)}
           >
             <Edit className="mr-2 h-4 w-4" />
             Update

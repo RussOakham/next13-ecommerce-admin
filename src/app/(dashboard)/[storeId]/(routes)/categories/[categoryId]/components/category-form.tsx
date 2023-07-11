@@ -5,7 +5,6 @@ import { useForm } from 'react-hook-form'
 import { toast } from 'react-hot-toast'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { Billboard, Category } from '@prisma/client'
-import axios from 'axios'
 import { Trash } from 'lucide-react'
 import { useParams, useRouter } from 'next/navigation'
 
@@ -29,6 +28,7 @@ import {
   SelectValue,
 } from '@/components/ui/select'
 import Separator from '@/components/ui/separator'
+import axios from '@/lib/axios'
 import {
   UpsertCategoryRequestSchema,
   upsertCategoryRequestSchema,
@@ -44,6 +44,9 @@ const CategoryForm = ({ initialData, billboards }: CategoryFormProps) => {
   const [loading, setLoading] = useState(false)
   const params = useParams()
   const router = useRouter()
+
+  const storeId = params.storeId as string
+  const categoryId = params.categoryId as string
 
   const title = initialData ? 'Edit Category' : 'New Category'
   const description = initialData
@@ -67,16 +70,13 @@ const CategoryForm = ({ initialData, billboards }: CategoryFormProps) => {
       setLoading(true)
 
       if (initialData) {
-        await axios.patch(
-          `/api/${params.storeId}/categories/${params.categoryId}`,
-          formData,
-        )
+        await axios.patch(`/api/${storeId}/categories/${categoryId}`, formData)
       } else {
-        await axios.post(`/api/${params.storeId}/categories`, formData)
+        await axios.post(`/api/${storeId}/categories`, formData)
       }
 
       router.refresh()
-      router.push(`/${params.storeId}/categories`)
+      router.push(`/${storeId}/categories`)
       toast.success(toastMessage)
     } catch (error) {
       toast.error('Something went wrong, please try again.')
@@ -88,12 +88,10 @@ const CategoryForm = ({ initialData, billboards }: CategoryFormProps) => {
   const onDelete = async () => {
     try {
       setLoading(true)
-      await axios.delete(
-        `/api/${params.storeId}/categories/${params.categoryId}`,
-      )
+      await axios.delete(`/api/${storeId}/categories/${categoryId}`)
 
       router.refresh()
-      router.push(`/${params.storeId}/categories`)
+      router.push(`/${storeId}/categories`)
       toast.success('Category deleted successfully.')
     } catch (error) {
       toast.error(
