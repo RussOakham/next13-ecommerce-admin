@@ -27,7 +27,9 @@ const SizesClient = ({ data }: SizesClientProps) => {
           title={`Sizes (${data.length})`}
           description="Manage your store sizes"
         />
-        <Button onClick={() => router.push(`/${params.storeId}/sizes/new`)}>
+        <Button
+          onClick={() => router.push(`/${params.storeId as string}/sizes/new`)}
+        >
           <Plus className="mr-2 h-4 w-4" />
           Add New
         </Button>

@@ -27,7 +27,11 @@ const ProductClient = ({ data }: ProductClientProps) => {
           title={`Products (${data.length})`}
           description="Manage your store products"
         />
-        <Button onClick={() => router.push(`/${params.storeId}/products/new`)}>
+        <Button
+          onClick={() =>
+            router.push(`/${params.storeId as string}/products/new`)
+          }
+        >
           <Plus className="mr-2 h-4 w-4" />
           Add New
         </Button>

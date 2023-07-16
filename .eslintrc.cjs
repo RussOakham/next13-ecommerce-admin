@@ -5,12 +5,10 @@ module.exports = {
   extends: [
     'next/core-web-vitals',
     'airbnb',
-    'airbnb/hooks',
     'airbnb-typescript',
     'eslint:recommended',
     'plugin:react/recommended',
     'plugin:react/jsx-runtime',
-    'plugin:react-hooks/recommended',
     'prettier',
   ],
   overrides: [

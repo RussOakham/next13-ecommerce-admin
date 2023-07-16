@@ -13,46 +13,48 @@ const MainNav = ({ className }: MainNavProps) => {
   const pathname = usePathname()
   const params = useParams()
 
+  const storeId = params.storeId as string
+
   const routes = [
     {
-      href: `/${params.storeId}`,
+      href: `/${storeId}`,
       label: 'Overview',
-      active: pathname === `/${params.storeId}`,
+      active: pathname === `/${storeId}`,
     },
     {
-      href: `/${params.storeId}/billboards`,
+      href: `/${storeId}/billboards`,
       label: 'Billboards',
-      active: pathname === `/${params.storeId}/billboards`,
+      active: pathname === `/${storeId}/billboards`,
     },
     {
-      href: `/${params.storeId}/categories`,
+      href: `/${storeId}/categories`,
       label: 'Categories',
-      active: pathname === `/${params.storeId}/categories`,
+      active: pathname === `/${storeId}/categories`,
     },
     {
-      href: `/${params.storeId}/sizes`,
+      href: `/${storeId}/sizes`,
       label: 'Sizes',
-      active: pathname === `/${params.storeId}/sizes`,
+      active: pathname === `/${storeId}/sizes`,
     },
     {
-      href: `/${params.storeId}/colors`,
+      href: `/${storeId}/colors`,
       label: 'Colors',
-      active: pathname === `/${params.storeId}/colors`,
+      active: pathname === `/${storeId}/colors`,
     },
     {
-      href: `/${params.storeId}/products`,
+      href: `/${storeId}/products`,
       label: 'Products',
-      active: pathname === `/${params.storeId}/products`,
+      active: pathname === `/${storeId}/products`,
     },
     {
-      href: `/${params.storeId}/orders`,
+      href: `/${storeId}/orders`,
       label: 'Orders',
-      active: pathname === `/${params.storeId}/orders`,
+      active: pathname === `/${storeId}/orders`,
     },
     {
-      href: `/${params.storeId}/settings`,
+      href: `/${storeId}/settings`,
       label: 'Settings',
-      active: pathname === `/${params.storeId}/settings`,
+      active: pathname === `/${storeId}/settings`,
     },
   ]
 
