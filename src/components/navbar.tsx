@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 
 import { prismadb } from '@/lib/prismadb'
 
+import DarkModeToggle from './dark-mode-toggle'
 import MainNav from './main-nav'
 import StoreSwitcher from './store-switcher'
 
@@ -28,6 +29,7 @@ const Navbar = async () => {
 				<StoreSwitcher items={stores} />
 				<MainNav className="mx-6" />
 				<div className="ml-auto flex items-center space-x-4">
+					<DarkModeToggle />
 					<UserButton afterSignOutUrl="/" />
 				</div>
 			</div>
