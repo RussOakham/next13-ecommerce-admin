@@ -6,38 +6,38 @@ import CategoryClient from './components/category-client'
 import { CategoryColumn } from './components/category-types'
 
 interface CategoriesPageProps {
-  params: {
-    storeId: string
-  }
+	params: {
+		storeId: string
+	}
 }
 
 const CategoriesPage = async ({ params }: CategoriesPageProps) => {
-  const categories = await prismadb.category.findMany({
-    where: {
-      storeId: params.storeId,
-    },
-    include: {
-      billboard: true,
-    },
-    orderBy: {
-      createdAt: 'desc',
-    },
-  })
+	const categories = await prismadb.category.findMany({
+		where: {
+			storeId: params.storeId,
+		},
+		include: {
+			billboard: true,
+		},
+		orderBy: {
+			createdAt: 'desc',
+		},
+	})
 
-  const formattedCategories: CategoryColumn[] = categories.map((item) => ({
-    id: item.id,
-    name: item.name,
-    billboardLabel: item.billboard.label,
-    createdAt: format(item.createdAt, 'MMM do, yyyy'),
-  }))
+	const formattedCategories: CategoryColumn[] = categories.map((item) => ({
+		id: item.id,
+		name: item.name,
+		billboardLabel: item.billboard.label,
+		createdAt: format(item.createdAt, 'MMM do, yyyy'),
+	}))
 
-  return (
-    <div className="flex-col">
-      <div className="flex-1 space-y-4 px-4 py-6">
-        <CategoryClient data={formattedCategories} />
-      </div>
-    </div>
-  )
+	return (
+		<div className="flex-col">
+			<div className="flex-1 space-y-4 px-4 py-6">
+				<CategoryClient data={formattedCategories} />
+			</div>
+		</div>
+	)
 }
 
 export default CategoriesPage

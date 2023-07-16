@@ -3,7 +3,7 @@
 import { Toaster } from 'react-hot-toast'
 
 const ToastProvider: React.FC = () => {
-  return <Toaster />
+	return <Toaster />
 }
 
 export default ToastProvider

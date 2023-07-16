@@ -13,36 +13,36 @@ import { BillboardColumn } from './billboard-types'
 import columns from './columns'
 
 interface BillboardClientProps {
-  data: BillboardColumn[]
+	data: BillboardColumn[]
 }
 
 const BillboardClient = ({ data }: BillboardClientProps) => {
-  const router = useRouter()
-  const params = useParams()
+	const router = useRouter()
+	const params = useParams()
 
-  return (
-    <>
-      <div className="flex items-center justify-between">
-        <Heading
-          title={`Billboards (${data.length})`}
-          description="Manage your store billboards"
-        />
-        <Button
-          onClick={() =>
-            router.push(`/${params.storeId as string}/billboards/new`)
-          }
-        >
-          <Plus className="mr-2 h-4 w-4" />
-          Add New
-        </Button>
-      </div>
-      <Separator />
-      <DataTable columns={columns} data={data} searchKey="label" />
-      <Heading title="API" description="API Calls for Billboards" />
-      <Separator />
-      <ApiList entityIdName="billboardId" entityName="billboards" />
-    </>
-  )
+	return (
+		<>
+			<div className="flex items-center justify-between">
+				<Heading
+					title={`Billboards (${data.length})`}
+					description="Manage your store billboards"
+				/>
+				<Button
+					onClick={() =>
+						router.push(`/${params.storeId as string}/billboards/new`)
+					}
+				>
+					<Plus className="mr-2 h-4 w-4" />
+					Add New
+				</Button>
+			</div>
+			<Separator />
+			<DataTable columns={columns} data={data} searchKey="label" />
+			<Heading title="API" description="API Calls for Billboards" />
+			<Separator />
+			<ApiList entityIdName="billboardId" entityName="billboards" />
+		</>
+	)
 }
 
 export default BillboardClient

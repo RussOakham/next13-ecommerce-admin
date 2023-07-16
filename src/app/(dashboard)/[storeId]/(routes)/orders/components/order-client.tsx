@@ -8,20 +8,20 @@ import columns from './columns'
 import { OrdersColumn } from './orders-types'
 
 interface OrderClientProps {
-  data: OrdersColumn[]
+	data: OrdersColumn[]
 }
 
 const OrderClient = ({ data }: OrderClientProps) => {
-  return (
-    <>
-      <Heading
-        title={`Orders (${data.length})`}
-        description="Manage your store orders"
-      />
-      <Separator />
-      <DataTable columns={columns} data={data} searchKey="products" />
-    </>
-  )
+	return (
+		<>
+			<Heading
+				title={`Orders (${data.length})`}
+				description="Manage your store orders"
+			/>
+			<Separator />
+			<DataTable columns={columns} data={data} searchKey="products" />
+		</>
+	)
 }
 
 export default OrderClient

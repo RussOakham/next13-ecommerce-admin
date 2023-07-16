@@ -4,6 +4,8 @@ const config = {
   semi: false,
   singleQuote: true,
   trailingComma: 'all',
+  tabWidth: 2,
+  useTabs: true,
 }
 
 module.exports = config

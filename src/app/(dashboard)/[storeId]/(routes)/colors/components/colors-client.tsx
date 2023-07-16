@@ -13,36 +13,36 @@ import { ColorColumn } from './colors-types'
 import columns from './columns'
 
 interface ColorClientProps {
-  data: ColorColumn[]
+	data: ColorColumn[]
 }
 
 const ColorsClient = ({ data }: ColorClientProps) => {
-  const router = useRouter()
-  const params = useParams()
+	const router = useRouter()
+	const params = useParams()
 
-  return (
-    <>
-      <div className="flex items-center justify-between">
-        <Heading
-          title={`Colors (${data.length})`}
-          description="Manage your store colors"
-        />
-        <Button
-          onClick={() =>
-            router.push(`/${params?.storeId as string}/colors/new`)
-          }
-        >
-          <Plus className="mr-2 h-4 w-4" />
-          Add New
-        </Button>
-      </div>
-      <Separator />
-      <DataTable columns={columns} data={data} searchKey="name" />
-      <Heading title="API" description="API Calls for Colors" />
-      <Separator />
-      <ApiList entityIdName="colorId" entityName="colors" />
-    </>
-  )
+	return (
+		<>
+			<div className="flex items-center justify-between">
+				<Heading
+					title={`Colors (${data.length})`}
+					description="Manage your store colors"
+				/>
+				<Button
+					onClick={() =>
+						router.push(`/${params?.storeId as string}/colors/new`)
+					}
+				>
+					<Plus className="mr-2 h-4 w-4" />
+					Add New
+				</Button>
+			</div>
+			<Separator />
+			<DataTable columns={columns} data={data} searchKey="name" />
+			<Heading title="API" description="API Calls for Colors" />
+			<Separator />
+			<ApiList entityIdName="colorId" entityName="colors" />
+		</>
+	)
 }
 
 export default ColorsClient

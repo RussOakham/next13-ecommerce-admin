@@ -5,17 +5,17 @@ import { useEffect, useState } from 'react'
 import StoreModal from '@/components/modals/store-modal'
 
 const ModalProvider = () => {
-  const [isMounted, setIsMounted] = useState(false)
+	const [isMounted, setIsMounted] = useState(false)
 
-  useEffect(() => {
-    setIsMounted(true)
+	useEffect(() => {
+		setIsMounted(true)
 
-    return () => setIsMounted(false)
-  }, [])
+		return () => setIsMounted(false)
+	}, [])
 
-  if (!isMounted) return null
+	if (!isMounted) return null
 
-  return <StoreModal />
+	return <StoreModal />
 }
 
 export default ModalProvider

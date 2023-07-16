@@ -6,127 +6,127 @@ import { prismadb } from '@/lib/prismadb'
 import { UpsertColorRequestSchema } from '@/schemas/color'
 
 export async function GET(
-  req: Request,
-  { params }: { params: { colorId: string } },
+	req: Request,
+	{ params }: { params: { colorId: string } },
 ) {
-  try {
-    if (!params.colorId) {
-      return new NextResponse('Color ID is required', { status: 400 })
-    }
+	try {
+		if (!params.colorId) {
+			return new NextResponse('Color ID is required', { status: 400 })
+		}
 
-    const color = await prismadb.color.findUnique({
-      where: {
-        id: params.colorId,
-      },
-    })
+		const color = await prismadb.color.findUnique({
+			where: {
+				id: params.colorId,
+			},
+		})
 
-    return NextResponse.json(color)
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log(`[COLOR_GET] ${(error as AxiosError).message}`)
-    return new NextResponse('Internal Error', { status: 500 })
-  }
+		return NextResponse.json(color)
+	} catch (error) {
+		// eslint-disable-next-line no-console
+		console.log(`[COLOR_GET] ${(error as AxiosError).message}`)
+		return new NextResponse('Internal Error', { status: 500 })
+	}
 }
 
 export async function PATCH(
-  req: Request,
-  { params }: { params: { storeId: string; colorId: string } },
+	req: Request,
+	{ params }: { params: { storeId: string; colorId: string } },
 ) {
-  try {
-    const { userId } = auth()
-    const body = await req.json()
+	try {
+		const { userId } = auth()
+		const body = await req.json()
 
-    const { name, value } = body as UpsertColorRequestSchema
+		const { name, value } = body as UpsertColorRequestSchema
 
-    if (!userId) {
-      return new NextResponse('Unauthenticated', { status: 401 })
-    }
+		if (!userId) {
+			return new NextResponse('Unauthenticated', { status: 401 })
+		}
 
-    if (!name) {
-      return new NextResponse('Color name is required', { status: 400 })
-    }
+		if (!name) {
+			return new NextResponse('Color name is required', { status: 400 })
+		}
 
-    if (!value) {
-      return new NextResponse('Color value is required', { status: 400 })
-    }
+		if (!value) {
+			return new NextResponse('Color value is required', { status: 400 })
+		}
 
-    if (!params.storeId) {
-      return new NextResponse('Store ID is required', { status: 400 })
-    }
+		if (!params.storeId) {
+			return new NextResponse('Store ID is required', { status: 400 })
+		}
 
-    if (!params.colorId) {
-      return new NextResponse('Color ID is required', { status: 400 })
-    }
+		if (!params.colorId) {
+			return new NextResponse('Color ID is required', { status: 400 })
+		}
 
-    const storeByUserId = await prismadb.store.findFirst({
-      where: {
-        id: params.storeId,
-        userId,
-      },
-    })
+		const storeByUserId = await prismadb.store.findFirst({
+			where: {
+				id: params.storeId,
+				userId,
+			},
+		})
 
-    if (!storeByUserId) {
-      return new NextResponse('Unauthorized', { status: 405 })
-    }
+		if (!storeByUserId) {
+			return new NextResponse('Unauthorized', { status: 405 })
+		}
 
-    const color = await prismadb.color.updateMany({
-      where: {
-        id: params.colorId,
-      },
-      data: {
-        name,
-        value,
-      },
-    })
+		const color = await prismadb.color.updateMany({
+			where: {
+				id: params.colorId,
+			},
+			data: {
+				name,
+				value,
+			},
+		})
 
-    return NextResponse.json(color)
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log(`[COLOR_PATCH] ${(error as AxiosError).message}`)
-    return new NextResponse('Internal Error', { status: 500 })
-  }
+		return NextResponse.json(color)
+	} catch (error) {
+		// eslint-disable-next-line no-console
+		console.log(`[COLOR_PATCH] ${(error as AxiosError).message}`)
+		return new NextResponse('Internal Error', { status: 500 })
+	}
 }
 
 export async function DELETE(
-  req: Request,
-  { params }: { params: { storeId: string; colorId: string } },
+	req: Request,
+	{ params }: { params: { storeId: string; colorId: string } },
 ) {
-  try {
-    const { userId } = auth()
+	try {
+		const { userId } = auth()
 
-    if (!userId) {
-      return new NextResponse('Unauthenticated', { status: 401 })
-    }
+		if (!userId) {
+			return new NextResponse('Unauthenticated', { status: 401 })
+		}
 
-    if (!params.storeId) {
-      return new NextResponse('Store ID is required', { status: 400 })
-    }
+		if (!params.storeId) {
+			return new NextResponse('Store ID is required', { status: 400 })
+		}
 
-    if (!params.colorId) {
-      return new NextResponse('Billboard ID is required', { status: 400 })
-    }
+		if (!params.colorId) {
+			return new NextResponse('Billboard ID is required', { status: 400 })
+		}
 
-    const storeByUserId = await prismadb.store.findFirst({
-      where: {
-        id: params.storeId,
-        userId,
-      },
-    })
+		const storeByUserId = await prismadb.store.findFirst({
+			where: {
+				id: params.storeId,
+				userId,
+			},
+		})
 
-    if (!storeByUserId) {
-      return new NextResponse('Unauthorized', { status: 405 })
-    }
+		if (!storeByUserId) {
+			return new NextResponse('Unauthorized', { status: 405 })
+		}
 
-    const color = await prismadb.color.delete({
-      where: {
-        id: params.colorId,
-      },
-    })
+		const color = await prismadb.color.delete({
+			where: {
+				id: params.colorId,
+			},
+		})
 
-    return NextResponse.json(color)
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log(`[COLOR_DELETE] ${(error as AxiosError).message}`)
-    return new NextResponse('Internal Error', { status: 500 })
-  }
+		return NextResponse.json(color)
+	} catch (error) {
+		// eslint-disable-next-line no-console
+		console.log(`[COLOR_DELETE] ${(error as AxiosError).message}`)
+		return new NextResponse('Internal Error', { status: 500 })
+	}
 }

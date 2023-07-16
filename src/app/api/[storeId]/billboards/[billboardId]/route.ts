@@ -6,127 +6,127 @@ import { prismadb } from '@/lib/prismadb'
 import { UpsertBillboardRequestSchema } from '@/schemas/billboard'
 
 export async function GET(
-  req: Request,
-  { params }: { params: { billboardId: string } },
+	req: Request,
+	{ params }: { params: { billboardId: string } },
 ) {
-  try {
-    if (!params.billboardId) {
-      return new NextResponse('Billboard ID is required', { status: 400 })
-    }
+	try {
+		if (!params.billboardId) {
+			return new NextResponse('Billboard ID is required', { status: 400 })
+		}
 
-    const billboard = await prismadb.billboard.findUnique({
-      where: {
-        id: params.billboardId,
-      },
-    })
+		const billboard = await prismadb.billboard.findUnique({
+			where: {
+				id: params.billboardId,
+			},
+		})
 
-    return NextResponse.json(billboard)
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log(`[BILLBOARD_GET] ${(error as AxiosError).message}`)
-    return new NextResponse('Internal Error', { status: 500 })
-  }
+		return NextResponse.json(billboard)
+	} catch (error) {
+		// eslint-disable-next-line no-console
+		console.log(`[BILLBOARD_GET] ${(error as AxiosError).message}`)
+		return new NextResponse('Internal Error', { status: 500 })
+	}
 }
 
 export async function PATCH(
-  req: Request,
-  { params }: { params: { storeId: string; billboardId: string } },
+	req: Request,
+	{ params }: { params: { storeId: string; billboardId: string } },
 ) {
-  try {
-    const { userId } = auth()
-    const body = await req.json()
+	try {
+		const { userId } = auth()
+		const body = await req.json()
 
-    const { label, imageUrl } = body as UpsertBillboardRequestSchema
+		const { label, imageUrl } = body as UpsertBillboardRequestSchema
 
-    if (!userId) {
-      return new NextResponse('Unauthenticated', { status: 401 })
-    }
+		if (!userId) {
+			return new NextResponse('Unauthenticated', { status: 401 })
+		}
 
-    if (!label) {
-      return new NextResponse('Label is required', { status: 400 })
-    }
+		if (!label) {
+			return new NextResponse('Label is required', { status: 400 })
+		}
 
-    if (!imageUrl) {
-      return new NextResponse('Image URL is required', { status: 400 })
-    }
+		if (!imageUrl) {
+			return new NextResponse('Image URL is required', { status: 400 })
+		}
 
-    if (!params.storeId) {
-      return new NextResponse('Store ID is required', { status: 400 })
-    }
+		if (!params.storeId) {
+			return new NextResponse('Store ID is required', { status: 400 })
+		}
 
-    if (!params.billboardId) {
-      return new NextResponse('Billboard ID is required', { status: 400 })
-    }
+		if (!params.billboardId) {
+			return new NextResponse('Billboard ID is required', { status: 400 })
+		}
 
-    const storeByUserId = await prismadb.store.findFirst({
-      where: {
-        id: params.storeId,
-        userId,
-      },
-    })
+		const storeByUserId = await prismadb.store.findFirst({
+			where: {
+				id: params.storeId,
+				userId,
+			},
+		})
 
-    if (!storeByUserId) {
-      return new NextResponse('Unauthorized', { status: 405 })
-    }
+		if (!storeByUserId) {
+			return new NextResponse('Unauthorized', { status: 405 })
+		}
 
-    const billboard = await prismadb.billboard.updateMany({
-      where: {
-        id: params.billboardId,
-      },
-      data: {
-        label,
-        imageUrl,
-      },
-    })
+		const billboard = await prismadb.billboard.updateMany({
+			where: {
+				id: params.billboardId,
+			},
+			data: {
+				label,
+				imageUrl,
+			},
+		})
 
-    return NextResponse.json(billboard)
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log(`[BILLBOARD_PATCH] ${(error as AxiosError).message}`)
-    return new NextResponse('Internal Error', { status: 500 })
-  }
+		return NextResponse.json(billboard)
+	} catch (error) {
+		// eslint-disable-next-line no-console
+		console.log(`[BILLBOARD_PATCH] ${(error as AxiosError).message}`)
+		return new NextResponse('Internal Error', { status: 500 })
+	}
 }
 
 export async function DELETE(
-  req: Request,
-  { params }: { params: { storeId: string; billboardId: string } },
+	req: Request,
+	{ params }: { params: { storeId: string; billboardId: string } },
 ) {
-  try {
-    const { userId } = auth()
+	try {
+		const { userId } = auth()
 
-    if (!userId) {
-      return new NextResponse('Unauthenticated', { status: 401 })
-    }
+		if (!userId) {
+			return new NextResponse('Unauthenticated', { status: 401 })
+		}
 
-    if (!params.storeId) {
-      return new NextResponse('Store ID is required', { status: 400 })
-    }
+		if (!params.storeId) {
+			return new NextResponse('Store ID is required', { status: 400 })
+		}
 
-    if (!params.billboardId) {
-      return new NextResponse('Billboard ID is required', { status: 400 })
-    }
+		if (!params.billboardId) {
+			return new NextResponse('Billboard ID is required', { status: 400 })
+		}
 
-    const storeByUserId = await prismadb.store.findFirst({
-      where: {
-        id: params.storeId,
-        userId,
-      },
-    })
+		const storeByUserId = await prismadb.store.findFirst({
+			where: {
+				id: params.storeId,
+				userId,
+			},
+		})
 
-    if (!storeByUserId) {
-      return new NextResponse('Unauthorized', { status: 405 })
-    }
+		if (!storeByUserId) {
+			return new NextResponse('Unauthorized', { status: 405 })
+		}
 
-    const billboard = await prismadb.billboard.delete({
-      where: {
-        id: params.billboardId,
-      },
-    })
+		const billboard = await prismadb.billboard.delete({
+			where: {
+				id: params.billboardId,
+			},
+		})
 
-    return NextResponse.json(billboard)
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.log(`[BILLBOARD_DELETE] ${(error as AxiosError).message}`)
-    return new NextResponse('Internal Error', { status: 500 })
-  }
+		return NextResponse.json(billboard)
+	} catch (error) {
+		// eslint-disable-next-line no-console
+		console.log(`[BILLBOARD_DELETE] ${(error as AxiosError).message}`)
+		return new NextResponse('Internal Error', { status: 500 })
+	}
 }

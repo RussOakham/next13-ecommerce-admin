@@ -1,7 +1,7 @@
 import { SignIn } from '@clerk/nextjs'
 
 const Page: React.FC = () => {
-  return <SignIn />
+	return <SignIn />
 }
 
 export default Page
