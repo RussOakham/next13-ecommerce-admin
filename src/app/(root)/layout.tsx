@@ -24,10 +24,7 @@ const HomepageLayout = async ({ children }: HomepageLayoutProps) => {
 		redirect(`/${store.id}`)
 	}
 
-	return (
-		// eslint-disable-next-line react/jsx-no-useless-fragment
-		<>{children}</>
-	)
+	return { children }
 }
 
 export default HomepageLayout
